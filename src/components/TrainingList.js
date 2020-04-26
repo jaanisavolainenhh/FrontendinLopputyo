@@ -11,7 +11,7 @@ import moment from 'moment';
 
 export default function TrainingList() {
     const [trainings, setTrainings] = React.useState([]);
-    const [customers, setCustomers] = React.useState([]);
+    const [customers, setCustomers] = React.useState([{customer: {firstname: "", lastname: ''}}]);
 
     const [open, setOpen] = React.useState(false);
     const [msg, setmsg] = React.useState('')
@@ -26,22 +26,34 @@ export default function TrainingList() {
                     let datat = data;
                     datat.map((daa,index) =>
                     {
+                        if(daa.customer!=null)
                         daa.customer.kokonimi = daa.customer.firstname+ ' ' + daa.customer.lastname
                     })
-                    console.log(datat)
+                   // console.log(datat)
                     //datat.map((daa))
                     setTrainings(datat)
                 })
             .catch(err => console.error(err))
     }
 
+    const getCustomers = () => {
+        fetch('https://customerrest.herokuapp.com/api/customers')
+            .then(response => response.json())
+            .then(data => setCustomers(data.content))
+            .catch(err => console.error(err))
+    }
+
+ 
+
 
     React.useEffect(() => {
         getTrainings();
+        getCustomers();
 
     }, [])
 
     const deleteTraining = (link) => {
+        console.log(link)
         if (window.confirm("Are youu sure?")) {
             fetch(link, { method: 'DELETE' })
                 .then(_ => getTrainings())
@@ -53,9 +65,6 @@ export default function TrainingList() {
         }
         console.log(link);
     }
-
-
-
 
     const addTraining = (car) => {
         fetch('https://customerrest.herokuapp.com/api/trainings/',
@@ -69,6 +78,7 @@ export default function TrainingList() {
         )
             .then(_ => getTrainings())
             .then(_ => {
+                console.log(car)
                 setmsg('CAR ADDED');
                 setOpen(true);
             }) //jos käytettäs parametria niin ois response _ sijaan
@@ -119,25 +129,23 @@ export default function TrainingList() {
         {
             Header: 'Customer',
             accessor: 'customer.kokonimi',
-
-
         },
-        {
-            //Header: 'testi',
-            Cell: row => (
-                <Edittraining car={row.original} updateTraining={updateTraining} />
-            )
-        },
+        // {
+        //     //Header: 'testi',
+        //     Cell: row => (
+        //         <Edittraining customers={customers} training={row.original} updateTraining={updateTraining} />
+        //     )
+        // },
         {
             Cell: row => (
-                <Button color="secondary" size="small" onClick={() => deleteTraining(row.original._links.self.href)}>Delete</Button>)
+                <Button color="secondary" size="small" onClick={() => deleteTraining("https://customerrest.herokuapp.com/api/trainings/"+row.original.id)}>Delete</Button>)
         }
     ]
 
 
     return (
         <div>
-            <Addtraining addTraining={addTraining} />
+            <Addtraining addTraining={addTraining} customers={customers} />
             <ReactTable data={trainings} columns={columns} defaultPageSize={10} filterable={true} />
             <Snackbar
                 open={open}

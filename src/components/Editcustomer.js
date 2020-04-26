@@ -9,23 +9,24 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function Editcustomer(props) {
     const [open, setOpen] = React.useState(false);
-    const [car, setCar] = React.useState({ brand: '', model: '', color: '', fuel: '', year: '', price: '' });
+    const [customer, setCustomer] = React.useState({ firstname: '', lastname: '', streetaddress: '', postcode: '', city: '', email: '', phone: '' });
     const handleClickOpen = () => {
-        console.log(props.car);
-        setCar(
+        console.log(props.customer);
+        setCustomer(
             {
-                brand: props.car.brand,
-                model: props.car.model,
-                color: props.car.color,
-                fuel: props.car.fuel,
-                year: props.car.year,
-                price: props.car.price
+                firstname: props.customer.firstname,
+                lastname: props.customer.lastname,
+                streetaddress: props.customer.streetaddress,
+                postcode: props.customer.postcode,
+                city: props.customer.city,
+                email: props.customer.email,
+                phone: props.customer.phone
             });
         setOpen(true);
     };
 
     const handleClose = () => {
-        props.updateCar(props.car._links.self.href, car);
+        props.updateCustomer(props.customer.links[0].href, customer);
         setOpen(false);
     };
 
@@ -34,7 +35,7 @@ export default function Editcustomer(props) {
     }
 
     const inputChanged = (event) => {
-        setCar({ ...car, [event.target.name]: event.target.value });
+        setCustomer({ ...customer, [event.target.name]: event.target.value });
     }
 
     return (
@@ -43,18 +44,18 @@ export default function Editcustomer(props) {
                 Edit
       </Button>
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit car</DialogTitle>
+                <DialogTitle id="form-dialog-title">Edit customer</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Lisätään auto :)
           </DialogContentText>
-                    <TextField
+          <TextField
                         autoFocus
                         margin="dense"
                         id="brand"
-                        label="Brand"
-                        name="brand"
-                        value={car.brand}
+                        label="First name"
+                        name="firstname"
+                        value={customer.firstname}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -62,9 +63,9 @@ export default function Editcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="model"
-                        label="Model"
-                        name="model"
-                        value={car.model}
+                        label="Last name"
+                        name="lastname"
+                        value={customer.lastname}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -72,9 +73,9 @@ export default function Editcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="color"
-                        label="Color"
-                        name="color"
-                        value={car.color}
+                        label="Street address"
+                        name="streetaddress"
+                        value={customer.streetaddress}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -83,9 +84,9 @@ export default function Editcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="name"
-                        label="Fuel"
-                        name="fuel"
-                        value={car.fuel}
+                        label="Postcode"
+                        name="postcode"
+                        value={customer.postcode}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -94,9 +95,9 @@ export default function Editcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="name"
-                        name="year"
-                        label="Year"
-                        value={car.year}
+                        name="city"
+                        label="City"
+                        value={customer.city}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -105,9 +106,20 @@ export default function Editcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="name"
-                        label="Price"
-                        name="price"
-                        value={car.price}
+                        label="Email"
+                        name="email"
+                        value={customer.email}
+                        onChange={inputChanged}
+                        fullWidth
+                    />
+
+                    <TextField
+                        // autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Phone"
+                        name="phone"
+                        value={customer.phone}
                         onChange={inputChanged}
                         fullWidth
                     />

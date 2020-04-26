@@ -9,22 +9,22 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function Addcustomer(props) {
     const [open, setOpen] = React.useState(false);
-    const [car, setCar] = React.useState({ brand: '', model: '', color: '', fuel: '', year: '', price: '' });
+    const [customer, setCustomer] = React.useState({ firstname: '', lastname: '', streetaddress: '', postcode: '', city: '', email: '', phone: '' });
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
-        props.addCustomer(car);
+        props.addCustomer(customer);
         setOpen(false);
     };
 
-    const handleCancel= () => {
+    const handleCancel = () => {
         setOpen(false);
     }
 
     const inputChanged = (event) => {
-        setCar({ ...car, [event.target.name]: event.target.value });
+        setCustomer({ ...customer, [event.target.name]: event.target.value });
     }
 
     return (
@@ -32,19 +32,19 @@ export default function Addcustomer(props) {
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Add Customer
       </Button>
-            <Dialog open={open}  onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Add car</DialogTitle>
+            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Add Customer</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                  Lisätään auto :)
+                        Lisätään asiakas :)
           </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="brand"
-                        label="Brand"
-                        name="brand"
-                        value={car.brand}
+                        label="First name"
+                        name="firstname"
+                        value={customer.firstname}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -52,9 +52,9 @@ export default function Addcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="model"
-                        label="Model"
-                        name="model"
-                        value={car.model}
+                        label="Last name"
+                        name="lastname"
+                        value={customer.lastname}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -62,9 +62,9 @@ export default function Addcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="color"
-                        label="Color"
-                        name="color"
-                        value={car.color}
+                        label="Street address"
+                        name="streetaddress"
+                        value={customer.streetaddress}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -73,9 +73,9 @@ export default function Addcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="name"
-                        label="Fuel"
-                        name="fuel"
-                        value={car.fuel}
+                        label="Postcode"
+                        name="postcode"
+                        value={customer.postcode}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -84,9 +84,9 @@ export default function Addcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="name"
-                        name="year"
-                        label="Year"
-                        value={car.year}
+                        name="city"
+                        label="City"
+                        value={customer.city}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -95,9 +95,20 @@ export default function Addcustomer(props) {
                         // autoFocus
                         margin="dense"
                         id="name"
-                        label="Price"
-                        name="price"
-                        value={car.price}
+                        label="Email"
+                        name="email"
+                        value={customer.email}
+                        onChange={inputChanged}
+                        fullWidth
+                    />
+
+                    <TextField
+                        // autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Phone"
+                        name="phone"
+                        value={customer.phone}
                         onChange={inputChanged}
                         fullWidth
                     />

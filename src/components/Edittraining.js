@@ -6,26 +6,26 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Vetovalikko from './Vetovalikko'
 
 export default function Edittraining(props) {
     const [open, setOpen] = React.useState(false);
-    const [car, setCar] = React.useState({ brand: '', model: '', color: '', fuel: '', year: '', price: '' });
+    const [training, setTraining] = React.useState({ date: '', duration: '', activity: '', customer: '' });
     const handleClickOpen = () => {
-        console.log(props.car);
-        setCar(
+        console.log(props.training);
+        setTraining(
             {
-                brand: props.car.brand,
-                model: props.car.model,
-                color: props.car.color,
-                fuel: props.car.fuel,
-                year: props.car.year,
-                price: props.car.price
+                date: props.training.date,
+                duration: props.training.duration,
+                activity: props.training.activity,
+                customer: props.training.customer
+
             });
         setOpen(true);
     };
 
     const handleClose = () => {
-        props.updateCar(props.car._links.self.href, car);
+        props.updateTraining(props.training._links.self.href, training);
         setOpen(false);
     };
 
@@ -34,7 +34,7 @@ export default function Edittraining(props) {
     }
 
     const inputChanged = (event) => {
-        setCar({ ...car, [event.target.name]: event.target.value });
+        setTraining({ ...training, [event.target.name]: event.target.value });
     }
 
     return (
@@ -43,38 +43,30 @@ export default function Edittraining(props) {
                 Edit
       </Button>
             <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit car</DialogTitle>
+                <DialogTitle id="form-dialog-title">Edit training</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Lisätään auto :)
           </DialogContentText>
+                    <Vetovalikko customers={props.customers} inputChanged={inputChanged} />
+
                     <TextField
-                        autoFocus
+                        // autoFocus
                         margin="dense"
-                        id="brand"
-                        label="Brand"
-                        name="brand"
-                        value={car.brand}
+                        id="activity"
+                        label="Activity"
+                        name="activity"
+                        value={training.activity}
                         onChange={inputChanged}
                         fullWidth
                     />
                     <TextField
                         // autoFocus
                         margin="dense"
-                        id="model"
-                        label="Model"
-                        name="model"
-                        value={car.model}
-                        onChange={inputChanged}
-                        fullWidth
-                    />
-                    <TextField
-                        // autoFocus
-                        margin="dense"
-                        id="color"
-                        label="Color"
-                        name="color"
-                        value={car.color}
+                        id="duration"
+                        label="Duration"
+                        name="duration"
+                        value={training.duration}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -82,32 +74,10 @@ export default function Edittraining(props) {
                     <TextField
                         // autoFocus
                         margin="dense"
-                        id="name"
-                        label="Fuel"
-                        name="fuel"
-                        value={car.fuel}
-                        onChange={inputChanged}
-                        fullWidth
-                    />
-
-                    <TextField
-                        // autoFocus
-                        margin="dense"
-                        id="name"
-                        name="year"
-                        label="Year"
-                        value={car.year}
-                        onChange={inputChanged}
-                        fullWidth
-                    />
-
-                    <TextField
-                        // autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Price"
-                        name="price"
-                        value={car.price}
+                        id="date"
+                        label="Date"
+                        name="date"
+                        value={training.date}
                         onChange={inputChanged}
                         fullWidth
                     />

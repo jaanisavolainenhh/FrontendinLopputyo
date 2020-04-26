@@ -6,25 +6,28 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import Vetovalikko from './Vetovalikko'
 export default function Addtraining(props) {
     const [open, setOpen] = React.useState(false);
-    const [car, setCar] = React.useState({ brand: '', model: '', color: '', fuel: '', year: '', price: '' });
+    const [training, setTraining] = React.useState({ date: '', duration: '', activity: '', customer: '' });
+    //const [customers, setCustomers] = React.useState([123,234,543,223]);
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
-        props.addCustomer(car);
+        props.addTraining(training);
         setOpen(false);
     };
 
-    const handleCancel= () => {
+    const handleCancel = () => {
         setOpen(false);
     }
 
     const inputChanged = (event) => {
-        setCar({ ...car, [event.target.name]: event.target.value });
+        setTraining({ ...training, [event.target.name]: event.target.value });
+        //console.log(event.target.value);
+        //console.log(training)
     }
 
     return (
@@ -32,39 +35,47 @@ export default function Addtraining(props) {
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                 Add Training
       </Button>
-            <Dialog open={open}  onClose={handleCancel} aria-labelledby="form-dialog-title">
+            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add Training</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                  Lisätään Training :)
-          </DialogContentText>
-                    <TextField
+                        Lisätään Training :)
+                      </DialogContentText>
+                    {/* <TextField
                         autoFocus
                         margin="dense"
-                        id="brand"
-                        label="Brand"
-                        name="brand"
-                        value={car.brand}
+                        id="customer"
+                        label="Customer"
+                        name="customer"
+                        value={training.customer}
+                        onChange={inputChanged}
+                        fullWidth
+                    /> */}
+                    
+
+                    <Vetovalikko customers={props.customers} inputChanged={inputChanged} />
+
+{/*   
+                        <div>
+                            <TextField/> Tähän jos halutaan tehdä vaikka vetovalikko jo olemassaoleville <TextField/>
+                        </div> */}
+                    <TextField
+                        // autoFocus
+                        margin="dense"
+                        id="activity"
+                        label="Activity"
+                        name="activity"
+                        value={training.activity}
                         onChange={inputChanged}
                         fullWidth
                     />
                     <TextField
                         // autoFocus
                         margin="dense"
-                        id="model"
-                        label="Model"
-                        name="model"
-                        value={car.model}
-                        onChange={inputChanged}
-                        fullWidth
-                    />
-                    <TextField
-                        // autoFocus
-                        margin="dense"
-                        id="color"
-                        label="Color"
-                        name="color"
-                        value={car.color}
+                        id="duration"
+                        label="Duration"
+                        name="duration"
+                        value={training.duration}
                         onChange={inputChanged}
                         fullWidth
                     />
@@ -72,35 +83,15 @@ export default function Addtraining(props) {
                     <TextField
                         // autoFocus
                         margin="dense"
-                        id="name"
-                        label="Fuel"
-                        name="fuel"
-                        value={car.fuel}
+                        id="date"
+                        label="Date"
+                        name="date"
+                        value={training.date}
                         onChange={inputChanged}
                         fullWidth
                     />
 
-                    <TextField
-                        // autoFocus
-                        margin="dense"
-                        id="name"
-                        name="year"
-                        label="Year"
-                        value={car.year}
-                        onChange={inputChanged}
-                        fullWidth
-                    />
 
-                    <TextField
-                        // autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Price"
-                        name="price"
-                        value={car.price}
-                        onChange={inputChanged}
-                        fullWidth
-                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCancel} color="primary">

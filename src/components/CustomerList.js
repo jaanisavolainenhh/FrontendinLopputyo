@@ -133,7 +133,7 @@ export default function CustomerList() {
         },
         {
             Cell: row => (
-                <Button color="secondary" size="small" onClick={() => deleteCustomer(row.original._links.self.href)}>Delete</Button>)
+                <Button color="secondary" size="small" onClick={() => deleteCustomer(row.original.links[0].href)}>Delete</Button>)
         }
 
 
@@ -142,7 +142,7 @@ export default function CustomerList() {
 
     return (
         <div>
-            <Addcustomer addcustomer={addCustomer} />
+            <Addcustomer addCustomer={addCustomer} />
             <ReactTable data={customers} columns={columns} defaultPageSize={10} filterable={true} />
             <Snackbar
                 open={open}
