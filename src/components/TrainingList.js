@@ -7,8 +7,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Addtraining from './Addtraining';
 import Edittraining from './Edittraining';
 import Moment from 'react-moment';
-import moment from 'moment';
-
+//import moment from 'moment';
+import moment from 'moment-with-locales-es6';
 export default function TrainingList() {
     const [trainings, setTrainings] = React.useState([]);
     const [customers, setCustomers] = React.useState([{customer: {firstname: "", lastname: ''}}]);
@@ -113,9 +113,12 @@ export default function TrainingList() {
 
         {
             Header: 'Date',
-            accessor: 'date',
-            Cell: row => (
-                <Moment format="DD/MM/YYYY HH:mm" date={row.original.date} />)
+            id: 'date',
+            accessor: d => {
+              return moment(d.date).locale('fi').format('L LT');
+            }
+            // Cell: row => (
+            //     <Moment format="DD/MM/YYYY HH:mm" date={row.original.date} />)
         },
         {
             Header: 'Duration',
