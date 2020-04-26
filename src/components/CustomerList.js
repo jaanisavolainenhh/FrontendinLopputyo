@@ -13,12 +13,6 @@ export default function CustomerList() {
     const [open, setOpen] = React.useState(false);
     const [msg, setmsg] = React.useState('')
 
-    const getTrainings = () => {
-        fetch('https://customerrest.herokuapp.com/api/trainings/')
-            .then(response => response.json())
-            .then(data => setCustomers(data.content))
-            .catch(err => console.error(err))
-    }
 
     const getCustomers = () => {
         fetch('https://customerrest.herokuapp.com/api/customers')
@@ -28,13 +22,13 @@ export default function CustomerList() {
     }
 
     React.useEffect(() => {
-        getTrainings();
+        getCustomers();
     }, [])
 
     const deleteTraining = (link) => {
         if (window.confirm("Are youu sure?")) {
             fetch(link, { method: 'DELETE' })
-                .then(_ => getTrainings())
+                .then(_ => getCustomers())
                 .then(_ => {
                     setmsg('TRAINING DELETED');
                     setOpen(true);
@@ -47,7 +41,7 @@ export default function CustomerList() {
     const deleteCustomer = (link) => {
         if (window.confirm("Are youu sure?")) {
             fetch(link, { method: 'DELETE' })
-                .then(_ => getTrainings())
+                .then(_ => getCustomers())
                 .then(_ => {
                     setmsg('CUSOMTER DELETED');
                     setOpen(true);
@@ -68,7 +62,7 @@ export default function CustomerList() {
                 body: JSON.stringify(customer)
             }
         )
-            .then(_ => getTrainings())
+            .then(_ => getCustomers())
             .then(_ => {
                 setmsg('customer ADDED');
                 setOpen(true);
@@ -87,7 +81,7 @@ export default function CustomerList() {
                 body: JSON.stringify(customer)
             }
         )
-            .then(_ => getTrainings())
+            .then(_ => getCustomers())
             .then(_ => {
                 setmsg('EDITED customer');
                 setOpen(true);
@@ -122,7 +116,7 @@ export default function CustomerList() {
         },
         {
             Header: 'City',
-            accessor: 'City'
+            accessor: 'city'
         },
         {
             Header: 'Email',

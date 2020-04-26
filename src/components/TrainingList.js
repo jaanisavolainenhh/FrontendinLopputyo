@@ -4,11 +4,12 @@ import 'react-table-v6/react-table.css'
 import ReactTable from 'react-table-v6';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import Addcar from './Addcar';
-import Editcar from './Editcar';
+import Addtraining from './Addtraining';
+import Edittraining from './Edittraining';
+import Moment from 'react-moment';
+import moment from 'moment';
 
 export default function TrainingList() {
-    const [customers, setCustomers] = React.useState([]);
     const [trainings, setTrainings] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const [msg, setmsg] = React.useState('')
@@ -16,16 +17,22 @@ export default function TrainingList() {
     const getTrainings = () => {
         fetch('https://customerrest.herokuapp.com/api/trainings/')
             .then(response => response.json())
-            .then(data => setCustomers(data.content))
+            .then(
+                data => {
+                    let datat = data.content;
+                    datat.map((aika, index) => {
+                        console.log(aika.date)
+                    }
+                    );
+
+                    console.log(data.content)
+                    setTrainings(data.content)
+
+
+                })
             .catch(err => console.error(err))
     }
 
-    const getCustomers = () => {
-        fetch('https://customerrest.herokuapp.com/api/customers')
-            .then(response => response.json())
-            .then(data => setCustomers(data.content))
-            .catch(err => console.error(err))
-    }
 
     React.useEffect(() => {
         getTrainings();
@@ -44,22 +51,11 @@ export default function TrainingList() {
         console.log(link);
     }
 
-    const deleteCustomer = (link) => {
-        if (window.confirm("Are youu sure?")) {
-            fetch(link, { method: 'DELETE' })
-                .then(_ => getTrainings())
-                .then(_ => {
-                    setmsg('CUSOMTER DELETED');
-                    setOpen(true);
-                })
-                .catch(err => console.error(err))
-        }
-        console.log(link);
-    }
 
 
-    const addCustomer = (car) => {
-        fetch('https://customerrest.herokuapp.com/api/customers',
+
+    const addTraining = (car) => {
+        fetch('https://customerrest.herokuapp.com/api/trainings/',
             {
                 method: 'POST',
                 headers: {
@@ -76,8 +72,7 @@ export default function TrainingList() {
             .catch(err => console.error(err))
     }
 
-    const updateCustomer = (link, car) => {
-
+    const updateTraining = (link, car) => {
         fetch(link,
             {
                 method: 'PUT',
@@ -93,7 +88,6 @@ export default function TrainingList() {
                 setOpen(true);
             }) //jos käytettäs parametria niin ois response _ sijaan
             .catch(err => console.error(err))
-
     }
 
 
@@ -101,45 +95,39 @@ export default function TrainingList() {
         console.log("sulkeudu paska");
         setOpen(false);
     }
+    //TODO
 
     const columns = [
 
         {
-            Header: 'First Name',
-            accessor: 'firstname'
-        },
-        {
-            Header: 'Last name',
-            accessor: 'lastname'
-        },
-        {
-            Header: 'Street Address',
-            accessor: 'streetaddress'
-        },
-        {
-            Header: 'Postcode',
-            accessor: 'postcode'
-        },
-        {
-            Header: 'City',
-            accessor: 'City'
-        },
-        {
-            Header: 'Email',
-            accessor: 'email'
-        },
-        {
-            Header: 'Phone',
-            accessor: 'phone'
-        },
-        {
+            Header: 'Date',
+            accessor: 'date',
             Cell: row => (
-                <Editcar car={row.original} updateCustomer={updateCustomer} />
+                <Moment format="DD/MM/YYYY HH:mm" date={row.original.date} />)
+        },
+        {
+            Header: 'Duration',
+            accessor: 'duration',
+
+        },
+        {
+            Header: 'Activity',
+            accessor: 'activity'
+        },
+        {
+            Header: 'Customer',
+            accessor: 'customer'
+        },
+
+        {
+            //Header: 'testi',
+            Cell: row => (
+                <Edittraining car={row.original} updateTraining={updateTraining} />
             )
         },
         {
             Cell: row => (
-                <Button color="secondary" size="small" onClick={() => deleteCustomer(row.original._links.self.href)}>Delete</Button>)
+                <Button color="secondary" size="small" onClick={() => deleteTraining(row.original._links.self.href)}>Delete</Button>)
         }
 
 
@@ -148,8 +136,8 @@ export default function TrainingList() {
 
     return (
         <div>
-            <Addcar addCar={addCustomer} />
-            <ReactTable data={customers} columns={columns} defaultPageSize={10} filterable={true} />
+            <Addtraining addTraining={addTraining} />
+            <ReactTable data={trainings} columns={columns} defaultPageSize={10} filterable={true} />
             <Snackbar
                 open={open}
                 autoHideDuration={3000}

@@ -17,7 +17,7 @@ function App() {
         </Toolbar>
       </AppBar>
       <CustomerList />
-      {/* <TrainingList /> */}
+      <TrainingList />
     </div>
   );
 }

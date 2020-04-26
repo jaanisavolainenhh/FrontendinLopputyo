@@ -7,29 +7,19 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function Editcustomer(props) {
+export default function Addtraining(props) {
     const [open, setOpen] = React.useState(false);
     const [car, setCar] = React.useState({ brand: '', model: '', color: '', fuel: '', year: '', price: '' });
     const handleClickOpen = () => {
-        console.log(props.car);
-        setCar(
-            {
-                brand: props.car.brand,
-                model: props.car.model,
-                color: props.car.color,
-                fuel: props.car.fuel,
-                year: props.car.year,
-                price: props.car.price
-            });
         setOpen(true);
     };
 
     const handleClose = () => {
-        props.updateCar(props.car._links.self.href, car);
+        props.addCustomer(car);
         setOpen(false);
     };
 
-    const handleCancel = () => {
+    const handleCancel= () => {
         setOpen(false);
     }
 
@@ -40,13 +30,13 @@ export default function Editcustomer(props) {
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Edit
+                Add Training
       </Button>
-            <Dialog open={open} onClose={handleCancel} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit car</DialogTitle>
+            <Dialog open={open}  onClose={handleCancel} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Add Training</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Lisätään auto :)
+                  Lisätään Training :)
           </DialogContentText>
                     <TextField
                         autoFocus

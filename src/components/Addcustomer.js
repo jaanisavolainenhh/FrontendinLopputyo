@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function Addcar(props) {
+export default function Addcustomer(props) {
     const [open, setOpen] = React.useState(false);
     const [car, setCar] = React.useState({ brand: '', model: '', color: '', fuel: '', year: '', price: '' });
     const handleClickOpen = () => {
@@ -15,7 +15,7 @@ export default function Addcar(props) {
     };
 
     const handleClose = () => {
-        props.addCar(car);
+        props.addCustomer(car);
         setOpen(false);
     };
 
@@ -30,7 +30,7 @@ export default function Addcar(props) {
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Add Car
+                Add Customer
       </Button>
             <Dialog open={open}  onClose={handleCancel} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add car</DialogTitle>
