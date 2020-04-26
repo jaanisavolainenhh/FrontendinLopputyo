@@ -11,24 +11,26 @@ import moment from 'moment';
 
 export default function TrainingList() {
     const [trainings, setTrainings] = React.useState([]);
+    const [customers, setCustomers] = React.useState([]);
+
     const [open, setOpen] = React.useState(false);
     const [msg, setmsg] = React.useState('')
 
+
     const getTrainings = () => {
-        fetch('https://customerrest.herokuapp.com/api/trainings/')
+        fetch('https://customerrest.herokuapp.com/gettrainings')
             .then(response => response.json())
             .then(
                 data => {
-                    let datat = data.content;
-                    datat.map((aika, index) => {
-                        console.log(aika.date)
-                    }
-                    );
-
-                    console.log(data.content)
-                    setTrainings(data.content)
-
-
+                    
+                    let datat = data;
+                    datat.map((daa,index) =>
+                    {
+                        daa.customer.kokonimi = daa.customer.firstname+ ' ' + daa.customer.lastname
+                    })
+                    console.log(datat)
+                    //datat.map((daa))
+                    setTrainings(datat)
                 })
             .catch(err => console.error(err))
     }
@@ -36,6 +38,7 @@ export default function TrainingList() {
 
     React.useEffect(() => {
         getTrainings();
+
     }, [])
 
     const deleteTraining = (link) => {
@@ -92,7 +95,6 @@ export default function TrainingList() {
 
 
     const handleClose = () => {
-        console.log("sulkeudu paska");
         setOpen(false);
     }
     //TODO
@@ -116,9 +118,10 @@ export default function TrainingList() {
         },
         {
             Header: 'Customer',
-            accessor: 'customer'
-        },
+            accessor: 'customer.kokonimi',
 
+
+        },
         {
             //Header: 'testi',
             Cell: row => (
@@ -129,8 +132,6 @@ export default function TrainingList() {
             Cell: row => (
                 <Button color="secondary" size="small" onClick={() => deleteTraining(row.original._links.self.href)}>Delete</Button>)
         }
-
-
     ]
 
 
