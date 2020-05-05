@@ -1,4 +1,5 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,16 +8,39 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Vetovalikko from './Vetovalikko'
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 200,
+    },
+}));
+
 export default function Addtraining(props) {
     const [open, setOpen] = React.useState(false);
     const [training, setTraining] = React.useState({ date: '', duration: '', activity: '', customer: '' });
-    //const [customers, setCustomers] = React.useState([123,234,543,223]);
+
+    const classes = useStyles();
+
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
-        props.addTraining(training);
+
+        let utckuntoon = training;
+        let uusiDate = new Date(training.date);
+        console.log("/////")
+        console.log(uusiDate);
+        ////utckuntoon.date = utckuntoon.date+"+0300";
+        utckuntoon.date = uusiDate;
+        console.log(utckuntoon)
+        props.addTraining(utckuntoon);
         setOpen(false);
     };
 
@@ -24,9 +48,14 @@ export default function Addtraining(props) {
         setOpen(false);
     }
 
+    const aikaChanged = (event) =>{
+        let uusiaika = event.target.value
+    }
+
     const inputChanged = (event) => {
         setTraining({ ...training, [event.target.name]: event.target.value });
-        //console.log(event.target.value);
+        console.log(event.target.value);
+
         //console.log(training)
     }
 
@@ -51,11 +80,11 @@ export default function Addtraining(props) {
                         onChange={inputChanged}
                         fullWidth
                     /> */}
-                    
+
 
                     <Vetovalikko customers={props.customers} inputChanged={inputChanged} />
 
-{/*   
+                    {/*   
                         <div>
                             <TextField/> Tähän jos halutaan tehdä vaikka vetovalikko jo olemassaoleville <TextField/>
                         </div> */}
@@ -79,8 +108,25 @@ export default function Addtraining(props) {
                         onChange={inputChanged}
                         fullWidth
                     />
+                    <form className={classes.container} noValidate>
 
-                    <TextField
+                        <TextField
+                            label="Date"
+                            id="date"
+                            name="date"
+                            type="datetime-local"
+                            //defaultValue=
+                            value={training.date}
+                            onChange={inputChanged}
+                        // className={classes.textField}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        />
+                    </form>
+
+
+                    {/* <TextField
                         // autoFocus
                         margin="dense"
                         id="date"
@@ -89,7 +135,8 @@ export default function Addtraining(props) {
                         value={training.date}
                         onChange={inputChanged}
                         fullWidth
-                    />
+                    /> */}
+
 
 
                 </DialogContent>

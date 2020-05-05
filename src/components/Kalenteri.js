@@ -35,9 +35,6 @@ export default function Kalenteri() {
                         if (daa.customer != null)
                             daa.customer.kokonimi = daa.customer.firstname + ' ' + daa.customer.lastname
                     })
-                    // console.log(datat)
-                    //datat.map((daa))
-                    //setTrainings(datat)
                     luoEventit(datat)
                 })
             .catch(err => console.error(err))
@@ -47,11 +44,16 @@ export default function Kalenteri() {
     {
         let eventit = Array();
         data.map((daa, index) => {
+            console.log("#####")
+            console.log(daa.date)
+            //let date2 = new Date();
             let uusiDate = new Date(daa.date);
-            uusiDate.setMinutes(uusiDate.getMinutes()+daa.duration)
-            //uusiDate.date
-            //uusiDate.setMinutes(daa.duration)
+            //console.log(uusiDate.getHours())
             console.log(uusiDate)
+
+            console.log(uusiDate.getHours())
+            uusiDate.setMinutes(uusiDate.getMinutes()+daa.duration)
+
             eventit.push({title: daa.activity+ " / "+daa.customer.kokonimi, start: daa.date, end: uusiDate})
         })
         setCalendarEvents(eventit);

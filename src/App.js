@@ -22,24 +22,7 @@ import Simpletabs from './components/Ylapalkki'
 
 function App() {
 
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-  }));
-
-  const classes = useStyles();
 
   return (
     <div className="App">
@@ -52,7 +35,6 @@ function App() {
       
       </AppBar>
        <Simpletabs />
-       {/* <CustomerList /> */}
     </div>
   );
 }
