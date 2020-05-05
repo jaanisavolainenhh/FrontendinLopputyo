@@ -34,13 +34,7 @@ export default function Addtraining(props) {
     const handleClose = () => {
 
         let utckuntoon = training;
-        utckuntoon.date = new Date(training.date); //
-        let uusiDate = new Date(training.date); //saadaan gmt tällä
-        console.log("/////")
-        console.log(uusiDate);
-        ////utckuntoon.date = utckuntoon.date+"+0300";
-       // utckuntoon.date = uusiDate; 
-        console.log(utckuntoon)
+        utckuntoon.date = new Date(training.date); //0000 -> 0300gm tallentaa koneen gmt 0000 sijaan.
         props.addTraining(utckuntoon);
         setOpen(false);
     };
@@ -53,9 +47,6 @@ export default function Addtraining(props) {
 
     const inputChanged = (event) => {
         setTraining({ ...training, [event.target.name]: event.target.value });
-        console.log(event.target.value);
-
-        //console.log(training)
     }
 
     return (
@@ -69,24 +60,12 @@ export default function Addtraining(props) {
                     <DialogContentText>
                         Lisätään Training :)
                       </DialogContentText>
-                    {/* <TextField
-                        autoFocus
-                        margin="dense"
-                        id="customer"
-                        label="Customer"
-                        name="customer"
-                        value={training.customer}
-                        onChange={inputChanged}
-                        fullWidth
-                    /> */}
+
 
 
                     <Vetovalikko customers={props.customers} inputChanged={inputChanged} />
 
-                    {/*   
-                        <div>
-                            <TextField/> Tähän jos halutaan tehdä vaikka vetovalikko jo olemassaoleville <TextField/>
-                        </div> */}
+
                     <TextField
                         // autoFocus
                         margin="dense"

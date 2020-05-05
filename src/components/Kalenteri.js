@@ -31,10 +31,6 @@ export default function Kalenteri() {
                 data => {
 
                     let datat = data;
-                    datat.map((daa, index) => {
-                        if (daa.customer != null)
-                            daa.customer.kokonimi = daa.customer.firstname + ' ' + daa.customer.lastname
-                    })
                     luoEventit(datat)
                 })
             .catch(err => console.error(err))
@@ -44,20 +40,10 @@ export default function Kalenteri() {
     {
         let eventit = Array();
         data.map((daa, index) => {
-            console.log("#####")
-            console.log(daa.date)
-            //let date2 = new Date();
-            let uusiDate = new Date(daa.date);
-            //console.log(uusiDate.getHours())
-            console.log(uusiDate)
-            console.log(uusiDate.getHours())
-
-            let testiaika = new Date();
-            testiaika.setUTCHours(5)
-            console.log(testiaika)
+            let uusiDate = new Date(daa.date); //voi olla nulli ,ei väliä lopun kannalta eli ei checkiä.
             uusiDate.setMinutes(uusiDate.getMinutes()+daa.duration)
-
-            eventit.push({title: daa.activity+ " / "+daa.customer.kokonimi, start: daa.date, end: uusiDate})
+            if(daa.customer) //katsotaa että ei oo nulli kun tietokannassa voi olla nulliasiakkaita
+                eventit.push({title: daa.activity+ " / "+daa.customer.firstname + " "+ daa.customer.lastname, start: daa.date, end: uusiDate})
         })
         setCalendarEvents(eventit);
 
