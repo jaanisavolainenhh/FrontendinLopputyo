@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Simpletabs from './components/Ylapalkki'
+import Chartit from './components/Chartteja'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         </Toolbar>
       
       </AppBar>
+      <Chartit />
        <Simpletabs />
     </div>
   );
