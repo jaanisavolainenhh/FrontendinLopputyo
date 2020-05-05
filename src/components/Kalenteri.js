@@ -50,8 +50,11 @@ export default function Kalenteri() {
             let uusiDate = new Date(daa.date);
             //console.log(uusiDate.getHours())
             console.log(uusiDate)
-
             console.log(uusiDate.getHours())
+
+            let testiaika = new Date();
+            testiaika.setUTCHours(5)
+            console.log(testiaika)
             uusiDate.setMinutes(uusiDate.getMinutes()+daa.duration)
 
             eventit.push({title: daa.activity+ " / "+daa.customer.kokonimi, start: daa.date, end: uusiDate})

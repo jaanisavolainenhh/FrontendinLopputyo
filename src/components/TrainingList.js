@@ -66,20 +66,20 @@ export default function TrainingList() {
         console.log(link);
     }
 
-    const addTraining = (car) => {
+    const addTraining = (training) => {
         fetch('https://customerrest.herokuapp.com/api/trainings/',
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(car)
+                body: JSON.stringify(training)
             }
         )
             .then(_ => getTrainings())
             .then(_ => {
-                console.log(car)
-                setmsg('CAR ADDED');
+                console.log(training)
+                setmsg('Training ADDED');
                 setOpen(true);
             }) //jos käytettäs parametria niin ois response _ sijaan
             .catch(err => console.error(err))

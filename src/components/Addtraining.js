@@ -34,11 +34,12 @@ export default function Addtraining(props) {
     const handleClose = () => {
 
         let utckuntoon = training;
-        let uusiDate = new Date(training.date);
+        utckuntoon.date = new Date(training.date); //
+        let uusiDate = new Date(training.date); //saadaan gmt tällä
         console.log("/////")
         console.log(uusiDate);
         ////utckuntoon.date = utckuntoon.date+"+0300";
-        utckuntoon.date = uusiDate;
+       // utckuntoon.date = uusiDate; 
         console.log(utckuntoon)
         props.addTraining(utckuntoon);
         setOpen(false);
@@ -48,9 +49,7 @@ export default function Addtraining(props) {
         setOpen(false);
     }
 
-    const aikaChanged = (event) =>{
-        let uusiaika = event.target.value
-    }
+ 
 
     const inputChanged = (event) => {
         setTraining({ ...training, [event.target.name]: event.target.value });
