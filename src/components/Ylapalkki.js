@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import CustomerList from './CustomerList';
 import TrainingList from './TrainingList';
 import Kalenteri from './Kalenteri'
-
+import Chartteja from './Chartteja'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -60,6 +60,8 @@ export default function SimpleTabs() {
           <Tab label="Customers" />
           <Tab label="Trainings" />
           <Tab label="Calendar" />
+          <Tab label="Charts" />
+
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -70,6 +72,9 @@ export default function SimpleTabs() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Kalenteri />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <Chartteja />
       </TabPanel>
     </div>
   );

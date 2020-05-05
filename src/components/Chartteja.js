@@ -4,11 +4,10 @@ import {
     XAxis, YAxis, Tooltip, Legend, ErrorBar, LabelList, Label
 } from 'recharts';
 
-//import _ from 'lodash';
-//import { changeNumberOfData } from './utils';
-
 
 export default function Chartteja() {
+
+    const [trainings, setTrainings] = React.useState([]);
 
     const [data, setData] = React.useState([
         { name: "gym", uv: 150 },
@@ -17,6 +16,45 @@ export default function Chartteja() {
 
     ]);
 
+    
+    React.useEffect(() => {
+        getTrainings();
+
+    }, [])
+
+    const getTrainings = () => {
+        fetch('https://customerrest.herokuapp.com/gettrainings')
+            .then(response => response.json())
+            .then(
+                data => {
+                    
+                    let trainit =  new Array();
+                    let setti = new Set();
+                    let tempcount = {};
+             
+
+                    data.map((daa, index) => {
+                        setti.add(daa.activity);
+                    })
+
+                    setti.forEach((a) => {
+                        tempcount[a] = 0
+                    })
+
+          
+                    data.map((daa, index) => {
+                        tempcount[daa.activity] = tempcount[daa.activity] + daa.duration
+                    })
+
+                    
+                    Object.keys(tempcount).forEach((looper) => {
+                        trainit.push({name: looper, uv: tempcount[looper]})
+                    })
+
+                    setData(trainit)
+                })
+            .catch(err => console.error(err))
+    }
 
     return (
         <div className="bar-charts">
@@ -30,7 +68,7 @@ export default function Chartteja() {
                 >
 
                     <YAxis>
-                        <Label angle={-90} value='Duration' position='insideLeft' style={{ textAnchor: 'middle' }} />
+                        <Label angle={-90} value='Duration (min)' position='insideLeft' style={{ textAnchor: 'middle' }} />
                     </YAxis>
 
                     <XAxis dataKey="name" type="category" />

@@ -22,7 +22,6 @@ function App() {
         </Toolbar>
       
       </AppBar>
-      <Chartit />
        <Simpletabs />
     </div>
   );
